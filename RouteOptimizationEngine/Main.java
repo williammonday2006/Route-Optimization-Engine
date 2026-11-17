@@ -155,11 +155,53 @@ public class Main {
                 graph.bfs("New York", "Los Angeles"));
         System.out.println("Miami to Seattle: " +
                 graph.bfs("Miami", "Seattle"));
+        System.out.println("Chicago to Miami: " +
+                graph.bfs("Chicago", "Miami"));
 
         System.out.println("\nDFS Connectivity Tests:");
         System.out.println("New York to Los Angeles: " +
                 graph.dfs("New York", "Los Angeles"));
         System.out.println("Miami to Seattle: " +
                 graph.dfs("Miami", "Seattle"));
+        System.out.println("Chicago to Miami: " +
+                graph.dfs("Chicago", "Miami"));
+
+        System.out.println("\nUnreachable City Test:");
+
+        WeightedGraph<String> disconnected = new WeightedGraph<>(4);
+
+        disconnected.addVertex("Boston");
+        disconnected.addVertex("Philadelphia");
+        disconnected.addVertex("Dallas");
+        disconnected.addVertex("Phoenix");
+
+        disconnected.addEdge("Boston", "Philadelphia", 300);
+
+        System.out.println("Boston to Philadelphia (BFS): " +
+                disconnected.bfs("Boston", "Philadelphia"));
+        System.out.println("Boston to Dallas (BFS): " +
+                disconnected.bfs("Boston", "Dallas"));
+        System.out.println("Boston to Dallas (DFS): " +
+                disconnected.dfs("Boston", "Dallas"));
+
+        System.out.println("\nTwo City Test:");
+
+        WeightedGraph<String> smallGraph = new WeightedGraph<>(2);
+
+        smallGraph.addVertex("Austin");
+        smallGraph.addVertex("Houston");
+
+        smallGraph.addEdge("Austin", "Houston", 165);
+
+        System.out.println("Austin to Houston (BFS): " +
+                smallGraph.bfs("Austin", "Houston"));
+        System.out.println("Austin to Houston (DFS): " +
+                smallGraph.dfs("Austin", "Houston"));
+
+        System.out.println("\nSame Starting and Ending City:");
+        System.out.println("Boston to Boston (BFS): " +
+                disconnected.bfs("Boston", "Boston"));
+        System.out.println("Boston to Boston (DFS): " +
+                disconnected.dfs("Boston", "Boston"));
     }
 }
