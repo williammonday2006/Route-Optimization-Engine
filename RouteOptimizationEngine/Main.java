@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.LinkedList;
 
 class WeightedGraph<T> {
     private List<T> vertices;
@@ -59,6 +61,38 @@ class WeightedGraph<T> {
             System.out.println();
         }
     }
+
+    public boolean bfs(T startVertex, T endVertex) {
+        int startIndex = vertices.indexOf(startVertex);
+        int endIndex = vertices.indexOf(endVertex);
+
+        if (startIndex == -1 || endIndex == -1) {
+            return false;
+        }
+
+        boolean[] visited = new boolean[vertices.size()];
+        Queue<Integer> queue = new LinkedList<>();
+
+        visited[startIndex] = true;
+        queue.add(startIndex);
+
+        while (!queue.isEmpty()) {
+            int current = queue.remove();
+
+            if (current == endIndex) {
+                return true;
+            }
+
+            for (int i = 0; i < vertices.size(); i++) {
+                if (matrix[current][i] != -1 && !visited[i]) {
+                    visited[i] = true;
+                    queue.add(i);
+                }
+            }
+        }
+
+        return false;
+    }
 }
 
 public class Main {
@@ -80,5 +114,11 @@ public class Main {
         graph.addEdge("Los Angeles", "Seattle", 1135);
 
         graph.displayGraph();
+
+        System.out.println("\nBFS Connectivity Tests:");
+        System.out.println("New York to Los Angeles: " +
+                graph.bfs("New York", "Los Angeles"));
+        System.out.println("Miami to Seattle: " +
+                graph.bfs("Miami", "Seattle"));
     }
 }

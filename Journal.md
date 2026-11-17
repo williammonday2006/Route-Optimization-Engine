@@ -1,3 +1,3 @@
-# Phase 1:
+# Phase 2:
 
-I chose an adjacency matrix because it makes checking connections and storing fuel costs easy. Since the network has a small, fixed number of cities, it is a simple approach.
+BFS uses a Queue to visit nearby cities first before exploring farther connections. This allows it to explore the graph level-by-level.
