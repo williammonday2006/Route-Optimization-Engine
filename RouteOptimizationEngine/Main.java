@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Stack;
 
 class WeightedGraph<T> {
     private List<T> vertices;
@@ -93,6 +94,40 @@ class WeightedGraph<T> {
 
         return false;
     }
+
+    public boolean dfs(T startVertex, T endVertex) {
+        int startIndex = vertices.indexOf(startVertex);
+        int endIndex = vertices.indexOf(endVertex);
+
+        if (startIndex == -1 || endIndex == -1) {
+            return false;
+        }
+
+        boolean[] visited = new boolean[vertices.size()];
+        Stack<Integer> stack = new Stack<>();
+
+        stack.push(startIndex);
+
+        while (!stack.isEmpty()) {
+            int current = stack.pop();
+
+            if (current == endIndex) {
+                return true;
+            }
+
+            if (!visited[current]) {
+                visited[current] = true;
+
+                for (int i = 0; i < vertices.size(); i++) {
+                    if (matrix[current][i] != -1 && !visited[i]) {
+                        stack.push(i);
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 }
 
 public class Main {
@@ -120,5 +155,11 @@ public class Main {
                 graph.bfs("New York", "Los Angeles"));
         System.out.println("Miami to Seattle: " +
                 graph.bfs("Miami", "Seattle"));
+
+        System.out.println("\nDFS Connectivity Tests:");
+        System.out.println("New York to Los Angeles: " +
+                graph.dfs("New York", "Los Angeles"));
+        System.out.println("Miami to Seattle: " +
+                graph.dfs("Miami", "Seattle"));
     }
 }
